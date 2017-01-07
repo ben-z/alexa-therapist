@@ -1,0 +1,13 @@
+{
+  "name": "alexa-rapist",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@kikinteractive/kik": "^2.0.12"
+  }
+}
