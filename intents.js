@@ -29,8 +29,8 @@ module.exports = function(app)
                     "Adjective": "ADJECTIVE",
                 },
                 "utterances":[ 
-                    "I {feel|cannot help feeling|can't help feeling} {-|Emotion}",
-                    "I {am|am feeling} {-|Emotion}",
+                    "{-|thePerson} {feel|cannot help feeling|can't help feeling} {-|Emotion}",
+                    "{-|thePerson} {am|am feeling} {-|Emotion}",
                     "{-|thePerson} {called|calls|keeps calling} me names. and it makes me {-|Emotion}",
                     "{-|Emotion} is all {I am feeling|I'm feeling|I feel}",
                     "There {is not|isn't} much I can do about being {-|Emotion}",
@@ -57,19 +57,6 @@ function stopIntent (request, response) {
     positiveEncouragement ( request, response );
     
     response.shouldEndSession(true);
-}
-
-function parseHelpWrapper ( request, response ) {
-    var thePerson = request.slot ( "thePerson" );
-    var adjective = request.slot("Adjective");
-    if ( thePerson ) {
-        console.log("freeform_text\nIt's about " + thePerson);
-        // do some parsing, to replace below line
-        response.say(generateTellMeMore(thePerson, adjective));
-    }
-    else 
-        positiveEncouragement ( request, response );
-    response.shouldEndSession(false);
 }
 
 function generatePositiveEncouragement () {
@@ -108,7 +95,7 @@ function generateTellMeMore(subject, adjective) {
   const tellMeMoreTemplates = (subject === 'I') ? tellMeMoreITemplates : tellMeMoreThirdPersonTemplates;
 
   objectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
-  subjectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
+  subjectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhim\b/ig, 'he').replace(/\bher\b/ig, 'she').replace(/\bthem\b/ig, 'they');
 
   return substituteTemplate(tellMeMoreTemplates[getRandomInt ( 0, tellMeMoreTemplates.length-1 )], { objectified_subject, subjectified_subject, adjective });
 }
@@ -118,14 +105,13 @@ function parseEmotion ( request, response ) {
     var emotion = request.slot ( "Emotion" );
     var thePerson = request.slot ( "thePerson" );
     console.log ( "Parsing emotion: " + emotion );
-    if ( thePerson )
-        console.log ( "It's about " + thePerson );
+    //if ( thePerson )
+        //console.log ( "It's about " + thePerson );
     if ( emotion ) {
-        response.say ( "I'm sorry that you are feeling " + 
-                emotion + ".How about you go into more detail? ");
+        response.say(generateTellMeMore(thePerson, emotion));
     }
     else 
-        parseHelpWrapper ( request, response );
+        positiveEncouragement ( request, response );
     response.shouldEndSession(false);
 }
 
