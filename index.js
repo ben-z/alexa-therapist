@@ -24,3 +24,5 @@ app.intent("start", {
         response.say("You asked for the number " + number);
     }
 );*/
+
+module.exports = app;
