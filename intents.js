@@ -28,6 +28,9 @@ module.exports = function(app)
 
     app.intent ( "WantToTalkIntent",
             {
+                "slots": {
+                },
+                "utterances": [ "I want to talk {|to you}", "Let's talk" ]
             },
             parseEmotion );
 
