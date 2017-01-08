@@ -1,0 +1,46 @@
+{
+  "intents": [
+    {
+      "intent": "DesperateIntent",
+    },
+        {
+      "intent": "KeywordIntent",
+      "slots": [
+        {
+          "name": "KeyNoun",
+          "name": "LIST_OF_NOUNS"
+        }
+      ]
+    },
+    {
+      "intent" : "EmotionIntent",
+      "slots": [
+        {
+          "name": "Emotion",
+          "name": "LIST_OF_EMOTIONS"
+        }
+      ]
+    },
+    {
+      "intent": "CustomStopIntent"
+    },
+    {
+      "intent": "GenericResponseIntent"
+    },
+    {
+      "intent": "AMAZON.StartOverIntent"
+    },
+    {
+      "intent": "AMAZON.RepeatIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
