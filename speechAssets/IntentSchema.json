@@ -19,6 +19,7 @@
           "name": "Emotion",
           "name": "LIST_OF_EMOTIONS"
         }
+      ]
     },
     {
       "intent": "CustomStopIntent"
