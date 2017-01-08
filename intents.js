@@ -25,7 +25,7 @@ module.exports = function(app)
             );
 
     app.intent("freeForm", parseHelpWrapper);
-    app.intent("AMAZON.HelpIntent", parseHelpWrapper);
+    app.intent("AMAZON.HelpIntent", promptForProblems);
 
     app.intent ( "AMAZON.StopIntent", function ( request, response )
             {
@@ -35,8 +35,12 @@ module.exports = function(app)
             );
 }
 
+function parseHelpWrapper ( request, response ) {
+    promptForProblems ( request, response );
+    // Do some parsing 
+}
 
-function parseHelpWrapper (request, response) {
+function promptForProblems (request, response) {
     console.log ( "Parsing freefrom input" );
     response.say ( "I see. Please tell me more" );
     response.shouldEndSession(false);
