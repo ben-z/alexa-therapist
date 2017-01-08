@@ -13,6 +13,7 @@ function getStartPrompt () {
 }
 
 app.launch(function(request, response) {
+    console.log ( "Therapist launched." );
     response.say( getStartPrompt() );
     response.shouldEndSession(false);
 });
