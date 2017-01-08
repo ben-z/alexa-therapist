@@ -8,6 +8,7 @@ module.exports = function(app)
                      "{Goodbye|Thanks} Alexa {|I feel a lot better now}",
                      "{Okay|I see} I will talk to {somebody|someone}",
                      "I don't want to talk about it",
+                     "I don't want to talk",
                      "I am good now",
                      "Let's {stop|finish}",
                      "Let's talk later",
@@ -176,7 +177,8 @@ function getRandomInt(min, max) {
 
 function generateResponeToDesperate () {
     const response = [
-        "Remember that there’s always somebody who cares about you. If you want to talk to someone more, please contact a hotline. ",
+        "Remember that there’s always somebody who cares about you. If you trust me, tell me more.",
+        "That's what I'm here for. What's on your mind?"
     ];
     return response[getRandomInt (0, response.length-1)];
 }
