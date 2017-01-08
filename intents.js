@@ -7,7 +7,11 @@ module.exports = function(app)
                     ["{Goodbye|Thanks} Alexa {|I feel much better now}",
                      "{Goodbye|Thanks} Alexa {|I feel a lot better now}",
                      "{Okay|I see} I will talk to {somebody|someone}",
-                     "I don't want to talk about it"
+                     "I don't want to talk about it",
+                     "I am good now",
+                     "Let's {stop|finish}",
+                     "Let's talk later",
+                     "I'm done",
                     ]
             }, 
             stopIntent );
@@ -28,7 +32,9 @@ module.exports = function(app)
                     [ "I want to {hurt|kill} myself",
                       "My life feels so worthless",
                       "I {want to| am considering to} {hurt myself|kill myself|suicide}",
-                      "I want to die",
+                      "{|Honestly} I want to die",
+                      "I don't want to live {at all|anymore}",
+                      "Life is not worth living",
                     ]
             },
             desperateWrapper );
@@ -51,7 +57,9 @@ module.exports = function(app)
                     "{-|thePerson} is {is|are|was|were|am} {-|Adjective}",
                     "{-|thePerson} {abuses|abuse|is abusing} {|me}",
                     "I {hate|don't like} {-|Activity}",
-                    "{-|Activity} is {-|Adjective}"
+                    "{-|Activity} is {-|Adjective}",
+                    "I {am worried about|keep worrying about} {thePerson}",
+                    "I {am worried about|keep worrying about} {Activity}",
                 ]
             },
             parseEmotion);
