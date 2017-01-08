@@ -33,7 +33,8 @@ module.exports = function(app)
                     "{-|thePerson} {called|calls|keeps calling} me names. and it makes me {-|Adjective}",
                     "{-|Adjective} is all {I am feeling|I'm feeling|I feel}",
                     "There {is not|isn't} much I can do about being {-|Adjective}",
-                    "{-|thePerson} is {is|are|was|were|am} {-|Adjective}"
+                    "{-|thePerson} is {is|are|was|were|am} {-|Adjective}",
+                    "{-|thePerson} {abuses|abuse|is abusing} {|me}"
                 ]
             },
             parseEmotion);
