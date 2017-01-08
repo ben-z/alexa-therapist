@@ -1,3 +1,7 @@
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 module.exports = function(app) {
   app.intent("end", {
       "slots": {},
@@ -12,10 +16,10 @@ module.exports = function(app) {
 
   app.intent("freeForm", {
     "slots": {
-      "Adjectives": "ADJECTIVES",
+      "Adjective": "ADJECTIVE",
       "thePerson": "AMAZON.US_FIRST_NAME"
     },
-    "utterances": ["{-|thePerson} {is|are|was|were|am} {-|Adjectives}"]
+    "utterances": ["{-|thePerson} {is|are|was|were|am} {-|Adjective}"]
   }, parseHelpWrapper);
 
   app.intent("AMAZON.HelpIntent", {
@@ -30,12 +34,42 @@ module.exports = function(app) {
   });
 }
 
+function substituteTemplate(templString, dict) {
+  let newString = templString;
+  for (let varname in dict) {
+    if(!dict.hasOwnProperty(varname)) continue;
+    console.log(`Replacing ${varname} with ${dict[varname]}`)
+    newString = newString.replace(`{${varname}}`, dict[varname]);
+  }
+  return newString;
+}
+
+function generateTellMeMore(subject, adjective) {
+  const tellMeMoreITemplates = [
+    'I see. Tell me more about it',
+    'Can you tell me more? What made you {adjective}?'
+  ];
+
+  const tellMeMoreThirdPersonTemplates = [
+    'I see. Tell me more about {objectified_subject}.',
+    'Can you tell me more about {objectified_subject}?',
+    'How {adjective} was {subjectified_subject}? Can you elaborate on that?'
+  ];
+
+  const tellMeMoreTemplates = (subject === 'I') ? tellMeMoreITemplates : tellMeMoreThirdPersonTemplates;
+
+  objectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
+  subjectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
+
+  return substituteTemplate(tellMeMoreTemplates[getRandomInt ( 0, tellMeMoreTemplates.length-1 )], { objectified_subject, subjectified_subject, adjective });
+}
+
 function parseHelpWrapper(request, response) {
   var thePerson = request.slot("thePerson");
+  var adjective = request.slot("Adjective");
   console.log("freeform_text\nIt's about " + thePerson);
   // do some parsing, to replace below line
-  response.say("I see. Tell me more about " +
-    ((thePerson == "I") ? "it" : thePerson));
+  response.say(generateTellMeMore(thePerson, adjective));
   response.shouldEndSession(false);
 }
 
