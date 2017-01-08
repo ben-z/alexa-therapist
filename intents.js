@@ -6,6 +6,7 @@ module.exports = function(app)
                 "utterances": 
                     ["{Goodbye|Thanks} Alexa {|I feel much better now}",
                      "{Goodbye|Thanks} Alexa {|I feel a lot better now}",
+                     "{Okay|I see} I will talk to {somebody|someone}",
                     ]
             }, 
             stopIntent );
