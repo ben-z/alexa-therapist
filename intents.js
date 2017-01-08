@@ -16,6 +16,7 @@ module.exports = function(app) {
     },
         function(request, response) {
             console.log ( "SessionEnd Intent." );
+            response.say ( "Have a nice day!" );
             response.shouldEndSession(true);
         }
     );
