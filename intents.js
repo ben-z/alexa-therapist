@@ -60,7 +60,7 @@ module.exports = function(app)
              "utterances": ["I have a problem"] },
             promptForProblems);
 
-    app.intent("freeForm",   );
+    app.intent("freeForm", generateTellMeMore ( )  );
 
     app.intent ( "AMAZON.StopIntent",stopIntent);
             
@@ -102,7 +102,7 @@ function positiveEncouragement ( request, response ) {
 function substituteTemplate(templString, dict) {
   let newString = templString;
   for (let varname in dict) {
-    if(!dict.hasOwnProperty(varname)) continue;
+    if(!dict.hasOwnProperty(varname) || !dict[varname]) continue;
     console.log(`Replacing ${varname} with ${dict[varname]}`)
     newString = newString.replace(`{${varname}}`, dict[varname]);
   }
@@ -110,12 +110,14 @@ function substituteTemplate(templString, dict) {
 }
 
 function generateTellMeMore(subject, adjective) {
+    const tellMeMoreGenericTemplates = [ 
+        'I see. Tell me more about it',
+        "I'm listening",
+        "I'm all ears",
+    ];
   const tellMeMoreITemplates = [
-    'I see. Tell me more about it',
     'Can you tell me more? What made you {adjective}?',
     'Why are you {adjective}?',
-    "I'm listening",
-    "I'm all ears",
   ];
 
   const tellMeMoreThirdPersonTemplates = [
@@ -124,11 +126,19 @@ function generateTellMeMore(subject, adjective) {
     'How {adjective} was {subjectified_subject}? Can you elaborate on that?'
   ];
 
-  const tellMeMoreTemplates = (subject === 'I') ? tellMeMoreITemplates : tellMeMoreThirdPersonTemplates;
+  const tellMeMoreTemplates = [...tellMeMoreGenericTemplates];
+ if ( subject && adjective ) {
+    if ( subject === 'I' ) {
+        tellMeMoreTemplates.push (... tellMeMoreITemplates );
+    }
+    else {
+        tellMeMoreTemplates.push (... tellMeMoreThirdPersonTemplates );
+    }
+ } 
 
   console.log('subject', subject);
-  objectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
-  subjectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhim\b/ig, 'he').replace(/\bher\b/ig, 'she').replace(/\bthem\b/ig, 'they');
+  objectified_subject = subject ? subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them') : null;
+  subjectified_subject = subject ? subject.replace(/\bmy\b/ig, 'your').replace(/\bhim\b/ig, 'he').replace(/\bher\b/ig, 'she').replace(/\bthem\b/ig, 'they') : null;
 
   return substituteTemplate(tellMeMoreTemplates[getRandomInt ( 0, tellMeMoreTemplates.length-1 )], { objectified_subject, subjectified_subject, adjective });
 }
