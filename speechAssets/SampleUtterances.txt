@@ -2,8 +2,22 @@ DesperateIntent I want to kill myself
 DesperateIntent My life feels so worthless
 DesperateIntent I am considering suicide
 DesperateIntent I want to die
+DesperateIntent Honestly I want to die
+DesperateIntent My life is worthless
+DesperateIntent I want to hurt myself
+DesperateIntent I'm thinking of killing myself
+DesperateIntent I don't want to live anymore
+DesperateIntent Life is not worth living
 
-KeywordIntent Keyword is {KeyNoun}
+KeywordIntent I hate my {KeyNoun}
+KeywordIntent {KeyNoun} makes me sad
+KeywordIntent {KeyNoun} keeps bullying me
+KeywordIntent {KeyNoun} bullys me
+KeywordIntent I keep worrying about my {KeyNoun}
+KeywordIntent {KeyNoun} hurts
+KeywordIntent I feel unsafe when there is {KeyNoun}
+KeywordIntent When there is {KeyNoun} I feel unsafe
+KeywordIntent {KeyNoun} pisses me off
 
 EmotionIntent I feel {EMOTIONS} 
 EmotionIntent Collin keeps calling me names, and it makes me {EMOTIONS}
@@ -13,5 +27,10 @@ EmotionIntent There isn't much I can do about being {EMOTIONS}
 
 CustomStopIntent I don't want to talk about it
 CustomStopIntent Thanks Alexa
-CustomeStopIntent Thanks Alexa, I feel a lot better now. 
-
+CustomStopIntent Thanks Alexa, I feel a lot better now. 
+CustomStopIntent I'm feeling better now Alexa
+CustomStopIntent I'm good now
+CustomStopIntent Ok I'm done
+CustomStopIntent Let's stop
+CustomStopIntent Let's finish here
+CustomStopIntent Let's talk later
