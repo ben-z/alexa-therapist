@@ -6,6 +6,10 @@ DesperateIntent I want to die
 KeywordIntent Keyword is {KeyNoun}
 
 EmotionIntent I feel {Emotion} 
+EmotionIntent Collin keeps calling me names, and it makes me {Emotion}
 
 CustomStopIntent I don't want to talk about it
+CustomStopIntent Thanks Alexa
+
+
 
