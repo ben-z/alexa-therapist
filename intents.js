@@ -1,4 +1,5 @@
 module.exports = function(app) {
+    console.log ( "Inside intents.js");
     app.intent("start", {
         "slots": { "number": "NUMBER" },
         "utterances": ["say the number {1-100|number}"]
