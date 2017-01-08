@@ -8,6 +8,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@kikinteractive/kik": "^2.0.12"
+    "alexa-app": "^2.4.0"
   }
 }

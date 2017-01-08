@@ -1,30 +1,26 @@
-'use strict';
+var alexa = require("alexa-app");
+var app = new alexa.app("alexa-therapist");
 
-let util = require('util');
-let http = require('http');
-let Bot  = require('@kikinteractive/kik');
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-// Configure the bot API endpoint, details for your bot
-let bot = new Bot({
-    username: process.env['KIK_BOT_USERNAME'] || 'hackvalley',
-    apiKey: process.env['KIK_BOT_API_KEY'] || 'bedc16ba-29ba-4b26-b612-15fc26e8f786',
-    baseUrl: process.env['KIK_BOT_NGROK_URL'] || 'https://5b57acf5.ngrok.io'
+// Launch Request
+function getStartPrompt () {
+    var _startPrompts = ["Sure, what's the problem?", "What's up?"];
+    return _startPrompts [getRandomInt ( 0, _startPrompts.length )];
+}
+
+app.launch(function(request, response) {
+    response.say( getStartPrompt() );
 });
-
-bot.updateBotConfiguration();
-
-bot.onStartChattingMessage((message) => {
-    bot.getUserProfile(message.from)
-        .then((user) => {
-            message.reply(`Hey ${user.firstName}!`);
-        });
-});
-
-bot.onTextMessage((message) => {
-    message.reply(`${message.body}!`);
-});
-
-// Set up your server and start listening
-let server = http
-    .createServer(bot.incoming())
-    .listen(process.env.PORT || 8080);
+/*
+app.intent("start", {
+    "slots": { "number": "NUMBER" },
+    "utterances": ["say the number {1-100|number}"]
+},
+    function(request, response) {
+        var number = request.slot("number");
+        response.say("You asked for the number " + number);
+    }
+);*/
