@@ -7,9 +7,11 @@ KeywordIntent Keyword is {KeyNoun}
 
 EmotionIntent I feel {Emotion} 
 EmotionIntent Collin keeps calling me names, and it makes me {Emotion}
+EmotionIntent I can't help feeling {Emotion}
+EmotionIntent {Emotion} is all I feel
+EmotionIntent There isn't much I can do about being {Emotion}
 
 CustomStopIntent I don't want to talk about it
 CustomStopIntent Thanks Alexa
-
-
+CustomeStopIntent Thanks Alexa, I feel a lot better now. 
 
