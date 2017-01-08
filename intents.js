@@ -60,7 +60,7 @@ module.exports = function(app)
              "utterances": ["I have a problem"] },
             promptForProblems);
 
-    app.intent("freeForm", positiveEncouragement );
+    app.intent("freeForm",   );
 
     app.intent ( "AMAZON.StopIntent",stopIntent);
             
@@ -84,10 +84,8 @@ function stopIntent (request, response) {
 function generatePositiveEncouragement () {
     const responses = [
         "Try talking to people who you trust in, and positive vibes.",
-        "Please remember when you are scared or frightened. never forget the times when you felt happy. When the day is dark. always remember happy days.",
         "You can be the ripest juiciest peach in the world.and there's still going to be somebody who hates peaches.",
         "A ship is safe in harbor, but that's not what ships are for.",
-        "The reason we struggle with insecurity is because we compare our behind-the-scenes with everyone else’s highlight reel.",
         "Not all those who wander are lost.",
         "If you're going through hell, keep going.",
         "War doesn't decide who's right. War decides who's left.", 
@@ -114,7 +112,10 @@ function substituteTemplate(templString, dict) {
 function generateTellMeMore(subject, adjective) {
   const tellMeMoreITemplates = [
     'I see. Tell me more about it',
-    'Can you tell me more? What made you {adjective}?'
+    'Can you tell me more? What made you {adjective}?',
+    'Why are you {adjective}?',
+    "I'm listening",
+    "I'm all ears",
   ];
 
   const tellMeMoreThirdPersonTemplates = [
