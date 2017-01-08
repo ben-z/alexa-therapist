@@ -10,7 +10,7 @@ module.exports = function(app) {
         }
     );
 
-    app.intent("SessionEnd", {
+    app.intent("end", {
         "slots": { },
         "utterances": ["Thanks Alexa"]
     },

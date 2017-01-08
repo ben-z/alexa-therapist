@@ -26,8 +26,7 @@ console.log ( "Utterances:\n" + app.utterances() + "\n\n" );
 
 app.sessionEnded(function(request, response) {
     // cleanup the user's server-side session
-    response.say("Sorry I don't understand that... Could you repeat that?");
-    response.shouldEndSession(false);
+    console.log ( "Unrecognized input: " + request.data );
     // no response required
 });
 
