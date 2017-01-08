@@ -10,9 +10,16 @@ module.exports = function(app) {
         }
     );
 
+    app.intent("parse",function(request, response) {
+            console.log ( "Parsing input" );
+            response.say ( "I see. Please tell me more" );
+            response.shouldEndSession(false);
+        }
+    );
+
     app.intent("end", {
         "slots": { },
-        "utterances": ["Thanks Alexa"]
+        "utterances": ["{Goodbye|Thanks} Alexa {|I feel much better now}"]
     },
         function(request, response) {
             console.log ( "SessionEnd Intent." );
@@ -20,5 +27,4 @@ module.exports = function(app) {
             response.shouldEndSession(true);
         }
     );
-
 }

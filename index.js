@@ -9,7 +9,7 @@ function getRandomInt(min, max) {
 // Launch Request
 function getStartPrompt () {
     var _startPrompts = ["Sure, what's the problem?", "What's up?"];
-    return _startPrompts [getRandomInt ( 0, _startPrompts.length )];
+    return _startPrompts [getRandomInt ( 0, _startPrompts.length-1 )];
 }
 
 app.launch(function(request, response) {
@@ -31,11 +31,11 @@ app.sessionEnded(function(request, response) {
 });
 
 app.pre = function(request, response, type) {
-      response.say("pre()");
+    console.log("pre()");
 };
 
 app.post = function(request, response, type, exception) {
-    response.say("post()");
+    console.log("post()");
     if (exception) {
         response.clear().say("An error occured: " + exception).send();
     }
