@@ -84,7 +84,7 @@ function stopIntent (request, response) {
 function generatePositiveEncouragement () {
     const responses = [
         "Try talking to people who you trust in, and positive vibes.",
-        "You can be the ripest juiciest peach in the world.and there's still going to be somebody who hates peaches.",
+        "You can be the ripest juiciest peach in the world, and there's still going to be somebody who hates peaches.",
         "A ship is safe in harbor, but that's not what ships are for.",
         "Not all those who wander are lost.",
         "If you're going through hell, keep going.",
@@ -118,6 +118,7 @@ function generateTellMeMore(subject, adjective) {
   const tellMeMoreITemplates = [
     'Can you tell me more? What made you {adjective}?',
     'Why are you {adjective}?',
+    'What made you {adjective}?'
   ];
 
   const tellMeMoreThirdPersonTemplates = [
@@ -165,7 +166,7 @@ function getRandomInt(min, max) {
 
 function generateResponeToDesperate () {
     const response = [
-        "Remember that there’s always somebody who cares about you. If you want to talk to someone more, please contact a suicide hotline. ",
+        "Remember that there’s always somebody who cares about you. If you want to talk to someone more, please contact a hotline. ",
     ];
     return response[getRandomInt (0, response.length-1)];
 }
