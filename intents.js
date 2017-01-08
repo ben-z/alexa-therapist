@@ -25,6 +25,11 @@ module.exports = function(app)
             },
             unwillingWrapper );
 
+    app.intent ( "WantToTalkIntent",
+            {
+            },
+            parseEmotion );
+
     app.intent ("DesperateIntent",
             {
                 "slots": { },
@@ -38,6 +43,7 @@ module.exports = function(app)
                     ]
             },
             desperateWrapper );
+
     app.intent ("EmotionIntent",
             {
                 "slots": { 
@@ -70,7 +76,7 @@ module.exports = function(app)
              "utterances": ["I have a problem"] },
             promptForProblems);
 
-    app.intent("freeForm", generateTellMeMore ( )  );
+    app.intent("freeForm", parseEmotion  );
 
     app.intent ( "AMAZON.StopIntent",stopIntent);
             
@@ -124,6 +130,7 @@ function generateTellMeMore(subject, adjective) {
         'I see. Tell me more about it',
         "I'm listening",
         "I'm all ears",
+        "That's what I'm here for.",
     ];
   const tellMeMoreITemplates = [
     'Can you tell me more? What made you {adjective}?',
@@ -165,8 +172,14 @@ function parseEmotion ( request, response ) {
     if ( emotion ) {
         response.say(generateTellMeMore( thePerson || activity || 'I', emotion));
     }
-    else 
-        positiveEncouragement ( request, response );
+    else {
+        // if there's not emotion, 50/50
+        var temp = getRandomInt ( 0, 1 );
+        if (temp === 0)
+            response.say(generateTellMeMore());
+        else
+            positiveEncouragement ( request, response );
+    }
     response.shouldEndSession(false);
 }
 
@@ -180,10 +193,12 @@ function generateResponeToDesperate () {
     ];
     return response[getRandomInt (0, response.length-1)];
 }
+
 function desperateWrapper ( request, response ) {
     response.say ( generateResponeToDesperate () );
     response.shouldEndSession ( false );
 }
+
 function promptForProblems (request, response) {
     console.log ( "Parsing freefrom input" );
     response.say ( "I see. Please tell me more" );
