@@ -14,7 +14,13 @@ KeywordIntent I feel unsafe when there is {KeyNoun}
 KeywordIntent When there is {KeyNoun} I feel unsafe
 KeywordIntent {KeyNoun} pisses me off
 
-EmotionIntent I feel {Emotion} 
+EmotionIntent I feel {EMOTIONS} 
+EmotionIntent Collin keeps calling me names, and it makes me {EMOTIONS}
+EmotionIntent I can't help feeling {EMOTIONS}
+EmotionIntent {EMOTIONS} is all I feel
+EmotionIntent There isn't much I can do about being {EMOTIONS}
 
 CustomStopIntent I don't want to talk about it
+CustomStopIntent Thanks Alexa
+CustomeStopIntent Thanks Alexa, I feel a lot better now. 
 

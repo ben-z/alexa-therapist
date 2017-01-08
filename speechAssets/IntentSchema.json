@@ -8,7 +8,7 @@
       "slots": [
         {
           "name": "KeyNoun",
-          "name": "LIST_OF_NOUNS"
+          "type": "LIST_OF_NOUNS"
         }
       ]
     },
@@ -17,7 +17,7 @@
       "slots": [
         {
           "name": "Emotion",
-          "name": "LIST_OF_EMOTIONS"
+          "type": "LIST_OF_EMOTIONS"
         }
       ]
     },
@@ -26,9 +26,6 @@
     },
     {
       "intent": "GenericResponseIntent"
-    },
-    {
-      "intent": "AMAZON.StartOverIntent"
     },
     {
       "intent": "AMAZON.RepeatIntent"
