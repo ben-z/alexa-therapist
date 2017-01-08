@@ -69,7 +69,7 @@ module.exports = function(app)
 function unwillingWrapper ( request, response ) {
     var activity = request.slot ( "Activity" );
     console.log ( "Unwilling intent" );
-    response.say ( "Why don't you want to " + activity );
+    response.say ( "Why don't you want to " + activity + "?" );
     response.shouldEndSession(false);
 }
 
