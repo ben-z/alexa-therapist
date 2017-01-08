@@ -1,17 +1,5 @@
 module.exports = function(app)
 {
-    app.intent("start",
-            {
-                "slots": { "number": "NUMBER" },
-                "utterances": ["say the number {1-5|number}"]
-            },
-            function(request, response) {
-                var number = request.slot("number");
-                response.say("You asked for the number " + number);
-                response.shouldEndSession(false);
-            }
-            );
-
     app.intent("end", 
             {
                 "slots": { },
@@ -25,11 +13,16 @@ module.exports = function(app)
             );
 
     app.intent("freeForm", {
-      "slots": { "freeform_text": "AMAZON.LITERAL" },
-      "utterances": ["{-|freeform_text}"]
+      "slots": { 
+          "Adjectives": "ADJECTIVES",
+          "thePerson": "AMAZON.US_FIRST_NAME" },
+      "utterances": ["{-|thePerson} {is|are|was|were|am} {-|Adjectives}"]
     }, parseHelpWrapper);
 
-    app.intent("AMAZON.HelpIntent", promptForProblems);
+    app.intent("AMAZON.HelpIntent",
+            {"slots":{},
+             "utterances": ["I have a problem"] },
+            promptForProblems);
 
     app.intent ( "AMAZON.StopIntent", function ( request, response )
             {
@@ -40,10 +33,12 @@ module.exports = function(app)
 }
 
 function parseHelpWrapper ( request, response ) {
-    console.log(request.slot("freeform_text"));
+    var thePerson = request.slot ( "thePerson" );
+    console.log("freeform_text\nIt's about " + thePerson);
     // do some parsing, to replace below line
-    response.say(`you said ${requesst.slot('freeform_text')}`);
-    promptForProblems ( request, response );
+    response.say ( "I see. Tell me more about " +
+            ( (thePerson == "I") ? "it" : thePerson ) );
+    response.shouldEndSession(false);
 }
 
 function promptForProblems (request, response) {
