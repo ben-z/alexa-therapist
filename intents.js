@@ -24,7 +24,11 @@ module.exports = function(app)
             }
             );
 
-    app.intent("freeForm", parseHelpWrapper);
+    app.intent("freeForm", {
+      "slots": { "freeform_text": "Amazon.LITERAL" },
+      "utterances": ["{-|freeform_text}"]
+    }, parseHelpWrapper);
+
     app.intent("AMAZON.HelpIntent", parseHelpWrapper);
 
     app.intent ( "AMAZON.StopIntent", function ( request, response )
@@ -37,6 +41,7 @@ module.exports = function(app)
 
 
 function parseHelpWrapper (request, response) {
+    console.log(request.slot("freeform_text"));
     console.log ( "Parsing freefrom input" );
     response.say ( "I see. Please tell me more" );
     response.shouldEndSession(false);

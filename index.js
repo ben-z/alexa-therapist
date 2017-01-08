@@ -31,14 +31,17 @@ app.sessionEnded(function(request, response) {
 });
 
 app.pre = function(request, response, type) {
-    console.log("pre()");
+    console.log("pre()===========================");
+    console.log(JSON.stringify(request.data));
+    console.log('================================');
 };
 
 app.post = function(request, response, type, exception) {
-    console.log("post()");
+    console.log("post()===========================");
     if (exception) {
         response.clear().say("An error occured: " + exception).send();
     }
+    console.log('==================================');
 };
 
 module.exports = app;
