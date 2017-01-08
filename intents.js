@@ -1,4 +1,4 @@
-module.export = function(app) {
+module.exports = function(app) {
     app.intent("start", {
         "slots": { "number": "NUMBER" },
         "utterances": ["say the number {1-100|number}"]
