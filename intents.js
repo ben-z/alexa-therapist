@@ -24,9 +24,9 @@ module.exports = function(app)
     app.intent ("EmotionIntent",
             {
                 "slots": { 
-                    "Emotion": "EMOTIONS",
+                    "Emotion": "EMOTION",
                     "thePerson": "AMAZON.US_FIRST_NAME",
-                    "Adjectives": "ADJECTIVES",
+                    "Adjective": "ADJECTIVE",
                 },
                 "utterances":[ 
                     "I {feel|cannot help feeling|can't help feeling} {-|Emotion}",
@@ -34,7 +34,7 @@ module.exports = function(app)
                     "{-|thePerson} {called|calls|keeps calling} me names. and it makes me {-|Emotion}",
                     "{-|Emotion} is all {I am feeling|I'm feeling|I feel}",
                     "There {is not|isn't} much I can do about being {-|Emotion}",
-                    "{-|thePerson} is {is|are|was|were|am} {-|Adjectives}"
+                    "{-|thePerson} is {is|are|was|were|am} {-|Adjective}"
                 ]
             },
             parseEmotion);
@@ -61,11 +61,11 @@ function stopIntent (request, response) {
 
 function parseHelpWrapper ( request, response ) {
     var thePerson = request.slot ( "thePerson" );
+    var adjective = request.slot("Adjective");
     if ( thePerson ) {
         console.log("freeform_text\nIt's about " + thePerson);
         // do some parsing, to replace below line
-        response.say ( "I see. Tell me more about " +
-                ( (thePerson == "I") ? "it" : thePerson ) );
+        response.say(generateTellMeMore(thePerson, adjective));
     }
     else 
         positiveEncouragement ( request, response );
@@ -83,11 +83,36 @@ function positiveEncouragement ( request, response ) {
     response.say ( generateResponeToDesperate() );
 }
 
-function promptForProblems (request, response) {
-    console.log ( "Parsing freefrom input" );
-    response.say ( "I see. Please tell me more" );
-    response.shouldEndSession(false);
+function substituteTemplate(templString, dict) {
+  let newString = templString;
+  for (let varname in dict) {
+    if(!dict.hasOwnProperty(varname)) continue;
+    console.log(`Replacing ${varname} with ${dict[varname]}`)
+    newString = newString.replace(`{${varname}}`, dict[varname]);
+  }
+  return newString;
 }
+
+function generateTellMeMore(subject, adjective) {
+  const tellMeMoreITemplates = [
+    'I see. Tell me more about it',
+    'Can you tell me more? What made you {adjective}?'
+  ];
+
+  const tellMeMoreThirdPersonTemplates = [
+    'I see. Tell me more about {objectified_subject}.',
+    'Can you tell me more about {objectified_subject}?',
+    'How {adjective} was {subjectified_subject}? Can you elaborate on that?'
+  ];
+
+  const tellMeMoreTemplates = (subject === 'I') ? tellMeMoreITemplates : tellMeMoreThirdPersonTemplates;
+
+  objectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
+  subjectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
+
+  return substituteTemplate(tellMeMoreTemplates[getRandomInt ( 0, tellMeMoreTemplates.length-1 )], { objectified_subject, subjectified_subject, adjective });
+}
+
 
 function parseEmotion ( request, response ) {
     var emotion = request.slot ( "Emotion" );
