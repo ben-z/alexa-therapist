@@ -75,8 +75,8 @@ function unwillingWrapper ( request, response ) {
 
 function stopIntent (request, response) {
     console.log ( "SessionEnd Intent." );
-    response.say ( "Have a nice day!" );
     positiveEncouragement ( request, response );
+    response.say ( "Have a nice day!" );
     
     response.shouldEndSession(true);
 }
