@@ -143,3 +143,8 @@ function desperateWrapper ( request, response ) {
     response.say ( generateResponeToDesperate () );
     response.shouldEndSession ( false );
 }
+function promptForProblems (request, response) {
+    console.log ( "Parsing freefrom input" );
+    response.say ( "I see. Please tell me more" );
+    response.shouldEndSession(false);
+}
