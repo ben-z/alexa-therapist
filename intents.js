@@ -67,7 +67,7 @@ function generatePositiveEncouragement () {
         "Try talking to people who you trust in, and positive vibes.",
         "Please remember when you are scared or frightened. never forget the times when you felt happy. When the day is dark. always remember happy days."
     ];
-    return response[getRandomInt (0, response.length-1)];
+    return responses[getRandomInt (0, responses.length-1)];
 }
 function positiveEncouragement ( request, response ) {
     response.say ( generatePositiveEncouragement() );
