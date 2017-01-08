@@ -25,7 +25,7 @@ module.exports = function(app)
             );
 
     app.intent("freeForm", {
-      "slots": { "freeform_text": "Amazon.LITERAL" },
+      "slots": { "freeform_text": "AMAZON.LITERAL" },
       "utterances": ["{-|freeform_text}"]
     }, parseHelpWrapper);
 
