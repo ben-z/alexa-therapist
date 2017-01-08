@@ -14,6 +14,7 @@ function getStartPrompt () {
 
 app.launch(function(request, response) {
     response.say( getStartPrompt() );
+    response.shouldEndSession(false);
 });
 
 populateIntents(app);
@@ -21,5 +22,12 @@ populateIntents(app);
 // Print schema and utterances 
 console.log ( "Schema:\n" + app.schema() + "\n\n" );
 console.log ( "Utterances:\n" + app.utterances() + "\n\n" );
+
+app.sessionEnded(function(request, response) {
+    // cleanup the user's server-side session
+    console.log("session ended for user: " + request.userId);
+    response.say("session ended for user: " + request.userId);
+    // no response required
+});
 
 module.exports = app;
