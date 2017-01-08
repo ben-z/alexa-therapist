@@ -11,8 +11,11 @@ function getStartPrompt () {
     return _startPrompts [getRandomInt ( 0, _startPrompts.length )];
 }
 
+<<<<<<< 290a9265204b90c91532dfc3c891584ccd76b154
 app.launch(function(request, response) {
     response.say( getStartPrompt() );
+bot.onTextMessage((message) => {
+    message.reply(`${message.body}!`);
 });
 /*
 app.intent("start", {

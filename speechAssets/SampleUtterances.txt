@@ -1,0 +1,8 @@
+DesperateIntent I want to kill myself
+
+KeywordIntent Keyword is {KeyNoun}
+
+EmotionIntent I feel {Emotion} 
+
+CustomStopIntent I don't want to talk about it
+
