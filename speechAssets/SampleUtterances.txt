@@ -2,8 +2,17 @@ DesperateIntent I want to kill myself
 DesperateIntent My life feels so worthless
 DesperateIntent I am considering suicide
 DesperateIntent I want to die
+DesperateIntent Honestly I want to die
 
-KeywordIntent Keyword is {KeyNoun}
+KeywordIntent I hate my {KeyNoun}
+KeywordIntent {KeyNoun} makes me sad
+KeywordIntent {KeyNoun} keeps bullying me
+KeywordIntent {KeyNoun} bullys me
+KeywordIntent I keep worrying about my {KeyNoun}
+KeywordIntent {KeyNoun} hurts
+KeywordIntent I feel unsafe when there is {KeyNoun}
+KeywordIntent When there is {KeyNoun} I feel unsafe
+KeywordIntent {KeyNoun} pisses me off
 
 EmotionIntent I feel {Emotion} 
 
