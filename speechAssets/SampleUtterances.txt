@@ -1,4 +1,7 @@
 DesperateIntent I want to kill myself
+DesperateIntent My life feels so worthless
+DesperateIntent I am considering suicide
+DesperateIntent I want to die
 
 KeywordIntent Keyword is {KeyNoun}
 
