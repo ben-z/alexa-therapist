@@ -30,4 +30,15 @@ app.sessionEnded(function(request, response) {
     // no response required
 });
 
+app.pre = function(request, response, type) {
+      response.say("pre()");
+};
+
+app.post = function(request, response, type, exception) {
+    response.say("post()");
+    if (exception) {
+        response.clear().say("An error occured: " + exception).send();
+    }
+};
+
 module.exports = app;
