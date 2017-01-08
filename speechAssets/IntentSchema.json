@@ -28,9 +28,6 @@
       "intent": "GenericResponseIntent"
     },
     {
-      "intent": "AMAZON.StartOverIntent"
-    },
-    {
       "intent": "AMAZON.RepeatIntent"
     },
     {
