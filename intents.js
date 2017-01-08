@@ -10,6 +10,15 @@ module.exports = function(app)
             }, 
             stopIntent );
 
+    app.intent ("UnwillingIntent",
+            {
+                "slots": {
+                    "Activity": "ACTIVITY",
+                },
+                "utterances": ["I {don't|do not} want to {-|Activity}"]
+            },
+            unwillingWrapper );
+
     app.intent ("DesperateIntent",
             {
                 "slots": { },
@@ -49,6 +58,13 @@ module.exports = function(app)
 
     app.intent ( "AMAZON.StopIntent",stopIntent);
             
+}
+
+function unwillingWrapper ( request, response ) {
+    var activity = request.slot ( "Activity" );
+    console.log ( "Unwilling intent" );
+    response.say ( "Why don't you want to " + activity );
+    response.shouldEndSession(false);
 }
 
 function stopIntent (request, response) {
