@@ -29,7 +29,7 @@ module.exports = function(app)
       "utterances": ["{-|freeform_text}"]
     }, parseHelpWrapper);
 
-    app.intent("AMAZON.HelpIntent", parseHelpWrapper);
+    app.intent("AMAZON.HelpIntent", promptForProblems);
 
     app.intent ( "AMAZON.StopIntent", function ( request, response )
             {
@@ -39,9 +39,14 @@ module.exports = function(app)
             );
 }
 
-
-function parseHelpWrapper (request, response) {
+function parseHelpWrapper ( request, response ) {
     console.log(request.slot("freeform_text"));
+    // do some parsing, to replace below line
+    response.say(`you said ${requesst.slot('freeform_text')}`);
+    promptForProblems ( request, response );
+}
+
+function promptForProblems (request, response) {
     console.log ( "Parsing freefrom input" );
     response.say ( "I see. Please tell me more" );
     response.shouldEndSession(false);
