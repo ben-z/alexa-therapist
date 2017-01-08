@@ -24,16 +24,15 @@ module.exports = function(app)
     app.intent ("EmotionIntent",
             {
                 "slots": { 
-                    "Emotion": "EMOTION",
                     "thePerson": "AMAZON.US_FIRST_NAME",
                     "Adjective": "ADJECTIVE",
                 },
                 "utterances":[ 
-                    "{-|thePerson} {feel|cannot help feeling|can't help feeling} {-|Emotion}",
-                    "{-|thePerson} {am|am feeling} {-|Emotion}",
-                    "{-|thePerson} {called|calls|keeps calling} me names. and it makes me {-|Emotion}",
-                    "{-|Emotion} is all {I am feeling|I'm feeling|I feel}",
-                    "There {is not|isn't} much I can do about being {-|Emotion}",
+                    "{-|thePerson} {feel|cannot help feeling|can't help feeling} {-|Adjective}",
+                    "{-|thePerson} {am|am feeling} {-|Adjective}",
+                    "{-|thePerson} {called|calls|keeps calling} me names. and it makes me {-|Adjective}",
+                    "{-|Adjective} is all {I am feeling|I'm feeling|I feel}",
+                    "There {is not|isn't} much I can do about being {-|Adjective}",
                     "{-|thePerson} is {is|are|was|were|am} {-|Adjective}"
                 ]
             },
@@ -102,7 +101,7 @@ function generateTellMeMore(subject, adjective) {
 
 
 function parseEmotion ( request, response ) {
-    var emotion = request.slot ( "Emotion" );
+    var emotion = request.slot ( "Adjective" );
     var thePerson = request.slot ( "thePerson" );
     console.log ( "Parsing emotion: " + emotion );
     //if ( thePerson )
