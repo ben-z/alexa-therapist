@@ -28,6 +28,9 @@ module.exports = function(app)
                     "Adjective": "ADJECTIVE",
                 },
                 "utterances":[ 
+                    "I {feel|cannot help feeling|can't help feeling} {-|Adjective}",
+                    "I {am|am feeling} {-|Adjective}",
+                    "I {called|calls|keeps calling} me names. and it makes me {-|Adjective}",
                     "{-|thePerson} {feel|cannot help feeling|can't help feeling} {-|Adjective}",
                     "{-|thePerson} {am|am feeling} {-|Adjective}",
                     "{-|thePerson} {called|calls|keeps calling} me names. and it makes me {-|Adjective}",
@@ -67,7 +70,7 @@ function generatePositiveEncouragement () {
     return response[getRandomInt (0, response.length-1)];
 }
 function positiveEncouragement ( request, response ) {
-    response.say ( generateResponeToDesperate() );
+    response.say ( generatePositiveEncouragement() );
 }
 
 function substituteTemplate(templString, dict) {
@@ -94,6 +97,7 @@ function generateTellMeMore(subject, adjective) {
 
   const tellMeMoreTemplates = (subject === 'I') ? tellMeMoreITemplates : tellMeMoreThirdPersonTemplates;
 
+  console.log('subject', subject);
   objectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them');
   subjectified_subject = subject.replace(/\bmy\b/ig, 'your').replace(/\bhim\b/ig, 'he').replace(/\bher\b/ig, 'she').replace(/\bthem\b/ig, 'they');
 
@@ -108,7 +112,7 @@ function parseEmotion ( request, response ) {
     //if ( thePerson )
         //console.log ( "It's about " + thePerson );
     if ( emotion ) {
-        response.say(generateTellMeMore(thePerson, emotion));
+        response.say(generateTellMeMore(thePerson || 'I', emotion));
     }
     else 
         positiveEncouragement ( request, response );
