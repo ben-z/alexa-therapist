@@ -35,6 +35,7 @@ module.exports = function(app)
                 "slots": { 
                     "thePerson": "AMAZON.US_FIRST_NAME",
                     "Adjective": "ADJECTIVE",
+                    "Activity": "ACTIVITY"
                 },
                 "utterances":[ 
                     "I {feel|cannot help feeling|can't help feeling} {-|Adjective}",
@@ -46,7 +47,9 @@ module.exports = function(app)
                     "{-|Adjective} is all {I am feeling|I'm feeling|I feel}",
                     "There {is not|isn't} much I can do about being {-|Adjective}",
                     "{-|thePerson} is {is|are|was|were|am} {-|Adjective}",
-                    "{-|thePerson} {abuses|abuse|is abusing} {|me}"
+                    "{-|thePerson} {abuses|abuse|is abusing} {|me}",
+                    "I {hate|don't like} {-|Activity}",
+                    "{-|Activity} is {-|Adjective}"
                 ]
             },
             parseEmotion);
@@ -124,11 +127,12 @@ function generateTellMeMore(subject, adjective) {
 function parseEmotion ( request, response ) {
     var emotion = request.slot ( "Adjective" );
     var thePerson = request.slot ( "thePerson" );
+    var activity = request.slot ("Activity" );
     console.log ( "Parsing emotion: " + emotion );
     //if ( thePerson )
         //console.log ( "It's about " + thePerson );
     if ( emotion ) {
-        response.say(generateTellMeMore(thePerson || 'I', emotion));
+        response.say(generateTellMeMore( thePerson || activity || 'I', emotion));
     }
     else 
         positiveEncouragement ( request, response );
