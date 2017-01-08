@@ -18,4 +18,8 @@ app.launch(function(request, response) {
 
 populateIntents(app);
 
+console.log ( app.schema() + "\n\n" );
+console.log ( app.utterances() + "\n\n" );
+
+
 module.exports = app;
