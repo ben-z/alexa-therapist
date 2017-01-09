@@ -12,7 +12,6 @@ module.exports = function(app)
                      "I am good now",
                      "Let's {stop|finish}",
                      "Let's talk later",
-                     "I'm done",
                     ]
             }, 
             stopIntent );
@@ -44,6 +43,7 @@ module.exports = function(app)
                       "{|Honestly} I want to die",
                       "I don't want to live {at all|anymore}",
                       "Life is not worth living",
+		      "I feel worthless"
                     ]
             },
             desperateWrapper );
@@ -58,6 +58,7 @@ module.exports = function(app)
                 "utterances":[ 
                     "I {feel|cannot help feeling|can't help feeling} {-|Adjective}",
                     "I {am|am feeling} {-|Adjective}",
+                    "I'm {|feeling} {-|Adjective}",
                     "I {called|calls|keeps calling} me names. and it makes me {-|Adjective}",
                     "{-|thePerson} {feel|cannot help feeling|can't help feeling} {-|Adjective}",
                     "{-|thePerson} {am|am feeling} {-|Adjective}",
@@ -101,25 +102,23 @@ function stopIntent (request, response) {
     response.shouldEndSession(true);
 }
 
-function generatePositiveEncouragement () {
+function generatePositiveEncouragement (session) {
     const responses = [
-        "Try talking to people who you trust in, and positive vibes.",
-        "You can be the ripest juiciest peach in the world, and there's still going to be somebody who hates peaches.",
+        "Try talking to people who you trust in, like me. Except that I'm not a real person.",
         "A ship is safe in harbor, but that's not what ships are for.",
         "Not all those who wander are lost.",
-        "If you're going through hell, keep going.",
-        "War doesn't decide who's right. War decides who's left.", 
-        "How Can Mirrors Be Real If Our Eyes Aren't Real",
-        "Worrying is like paying interest on a debt you may never owe",
+        "Worrying is like paying interest on a debt you may never owe.",
+	"The reason we struggle with insecurity is because we compare our behind-the-scenes with everyone else’s highlight reel.",
+	"look on the brighter side of things."
     ];
-    return responses[getRandomInt (0, responses.length-1)];
+    return responses[getRandomInt (0, responses.length-1, session)];
 }
 
 function positiveEncouragement ( request, response ) {
-    response.say ( generatePositiveEncouragement() );
+    response.say ( generatePositiveEncouragement(request.getSession()) );
 }
 
-function substituteTemplate(templString, dict) {
+function substituteTemplate(templString = "", dict) {
   let newString = templString;
   for (let varname in dict) {
     if(!dict.hasOwnProperty(varname) || !dict[varname]) continue;
@@ -129,12 +128,10 @@ function substituteTemplate(templString, dict) {
   return newString;
 }
 
-function generateTellMeMore(subject, adjective) {
+function generateTellMeMore(session, subject, adjective) {
     const tellMeMoreGenericTemplates = [ 
-        'I see. Tell me more about it',
+        'Tell me more about it',
         "I'm listening",
-        "I'm all ears",
-        "That's what I'm here for.",
     ];
   const tellMeMoreITemplates = [
     'Can you tell me more? What made you {adjective}?',
@@ -157,12 +154,12 @@ function generateTellMeMore(subject, adjective) {
         tellMeMoreTemplates.push (... tellMeMoreThirdPersonTemplates );
     }
  } 
+  let objectified_subject = subject ? subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them') : null;
+  let subjectified_subject = subject ? subject.replace(/\bmy\b/ig, 'your').replace(/\bhim\b/ig, 'he').replace(/\bher\b/ig, 'she').replace(/\bthem\b/ig, 'they') : null;
 
   console.log('subject', subject);
-  objectified_subject = subject ? subject.replace(/\bmy\b/ig, 'your').replace(/\bhe\b/ig, 'him').replace(/\bshe\b/ig, 'her').replace(/\bthey\b/ig, 'them') : null;
-  subjectified_subject = subject ? subject.replace(/\bmy\b/ig, 'your').replace(/\bhim\b/ig, 'he').replace(/\bher\b/ig, 'she').replace(/\bthem\b/ig, 'they') : null;
 
-  return substituteTemplate(tellMeMoreTemplates[getRandomInt ( 0, tellMeMoreTemplates.length-1 )], { objectified_subject, subjectified_subject, adjective });
+  return substituteTemplate(tellMeMoreTemplates[getRandomInt ( 0, tellMeMoreTemplates.length-1, session)], { objectified_subject, subjectified_subject, adjective });
 }
 
 
@@ -174,33 +171,39 @@ function parseEmotion ( request, response ) {
     //if ( thePerson )
         //console.log ( "It's about " + thePerson );
     if ( emotion ) {
-        response.say(generateTellMeMore( thePerson || activity || 'I', emotion));
+        response.say(generateTellMeMore(  request.getSession(), thePerson || activity || 'I', emotion));
     }
     else {
         // if there's not emotion, 50/50
-        var temp = getRandomInt ( 0, 1 );
+        var temp = getRandomInt ( 0, 1, request.getSession() );
         if (temp === 0)
-            response.say(generateTellMeMore());
+            response.say(generateTellMeMore(request.getSession()));
         else
             positiveEncouragement ( request, response );
     }
     response.shouldEndSession(false);
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function getRandomInt(min, max, session) {
+	let randNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    while (session.get('last_random_number') == randNum) {
+        randNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+	session.set('last_random_number', randNum);
+
+    return randNum;
 }
 
-function generateResponeToDesperate () {
+function generateResponeToDesperate (session) {
     const response = [
         "Remember that there’s always somebody who cares about you. If you trust me, tell me more.",
         "That's what I'm here for. What's on your mind?"
     ];
-    return response[getRandomInt (0, response.length-1)];
+    return response[getRandomInt (0, response.length-1, session)];
 }
 
 function desperateWrapper ( request, response ) {
-    response.say ( generateResponeToDesperate () );
+    response.say ( generateResponeToDesperate (request.getSession()) );
     response.shouldEndSession ( false );
 }
 
